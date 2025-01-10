@@ -8,7 +8,7 @@ import (
 
 func SetupRoutes(router *gin.Engine, ctrl *controllers.Controller) {
 
-	router.GET("/ping", controllers.HealthPing)
+	router.POST("/ping", controllers.HealthPing)
 
 	router.POST("/addcoin", ctrl.AddCoin)
 	router.POST("/updatecoin", ctrl.UpdateCoin)

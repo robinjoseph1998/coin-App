@@ -25,6 +25,11 @@ func HealthPing(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "pong"})
 }
 
+var (
+	Red   = "\033[31m"
+	Reset = "\033[0m"
+)
+
 //*********Add Coin***********//
 
 func (ctrl *Controller) AddCoin(c *gin.Context) {
@@ -36,8 +41,8 @@ func (ctrl *Controller) AddCoin(c *gin.Context) {
 	}
 	request.CreatedAt = time.Now()
 	if request.ExpiryDate.IsZero() {
-		request.ExpiryDate = time.Now().AddDate(0, 0, 1)
-		// request.ExpiryDate = time.Now().Add(48 * time.Second)
+		// request.ExpiryDate = time.Now().AddDate(0, 0, 1)
+		request.ExpiryDate = time.Now().Add(15 * time.Second)
 	}
 
 	if err := ctrl.Repo.CreateCoin(request); err != nil {
@@ -140,6 +145,8 @@ func (ctrl *Controller) DeleteExpiredCoins(c *gin.Context) {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete expired coin", "details": err.Error()})
 				return
 			}
+			log.Printf("%s[INFO]%s The coin %s has expired at %s", Red, Reset, coin.Name, currentTime)
+
 			err = ctrl.Repo.LogExpiredCoins(coin.Name, coin.ExpiryDate)
 			if err != nil {
 				log.Fatalf("failed to log expired coin: %v", err)
