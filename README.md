@@ -9,7 +9,7 @@ create a database in postgres.
 
 step 2 :
 
-Add the database name and you postgres password to the dsn string inside the ConnetDB function from utils/db/database.go
+Add the database name and your postgres password to the dsn string inside the ConnectDB function from utils/db/database.go
 
 # port running on :8000
 
