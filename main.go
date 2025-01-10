@@ -34,7 +34,7 @@ func main() {
 		}
 	}()
 
-	//******Cron Job Deleting Expired Coins*******//
+	//******Cron Job For Deleting Expired Coins Every 5 mins*******//
 	c := cron.New()
 	err = c.AddFunc("*/5 * * * *", func() {
 		log.Println("Running cron job: DeleteExpiredCoins")
