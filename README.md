@@ -17,7 +17,7 @@ Add the database name and your postgres password to the dsn string inside the Co
 
 # Health check
   http://localhost:8000/ping   
-  {
+  
 # 1: request model of Add Coin 
   http://localhost:8000/updatecoin
   
@@ -56,7 +56,7 @@ empty
  http://localhost:8000/view/expiredcoins/log
 
 empty
-  }
+
 
 
 
