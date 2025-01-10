@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  backend-api:
+    build: .
+    ports:
+      - "8000:8000"  
+    environment:
+      - DATABASE_URL=postgres://postgres:123456@localhost:5432/coindb?sslmode=disable  # Database connection string
+    volumes:
+      - .:/app  
