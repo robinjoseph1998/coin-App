@@ -41,8 +41,8 @@ func (ctrl *Controller) AddCoin(c *gin.Context) {
 	}
 	request.CreatedAt = time.Now()
 	if request.ExpiryDate.IsZero() {
-		// request.ExpiryDate = time.Now().AddDate(0, 0, 1)
-		request.ExpiryDate = time.Now().Add(15 * time.Second)
+		request.ExpiryDate = time.Now().AddDate(0, 0, 1)
+		// request.ExpiryDate = time.Now().Add(15 * time.Second)
 	}
 
 	if err := ctrl.Repo.CreateCoin(request); err != nil {
