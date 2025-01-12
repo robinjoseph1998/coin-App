@@ -39,10 +39,15 @@ func (ctrl *Controller) AddCoin(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input", "dteails": err.Error()})
 		return
 	}
+	res, _ := ctrl.Repo.FindByName(request.Name)
+	if res.ID != 0 {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Coin already exists"})
+		return
+	}
 	request.CreatedAt = time.Now()
 	if request.ExpiryDate.IsZero() {
-		request.ExpiryDate = time.Now().AddDate(0, 0, 1)
-		// request.ExpiryDate = time.Now().Add(15 * time.Second)
+		// request.ExpiryDate = time.Now().AddDate(0, 0, 1)
+		request.ExpiryDate = time.Now().Add(15 * time.Second)
 	}
 
 	if err := ctrl.Repo.CreateCoin(request); err != nil {
@@ -164,6 +169,18 @@ func (ctrl *Controller) ViewExpiredLogs(c *gin.Context) {
 	res, err := ctrl.Repo.ViewExpiredCoins()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch expired coin logs", "details": err.Error()})
+		return
+	}
+	c.JSON(http.StatusFound, gin.H{"Details": res})
+}
+
+// *******List Expired Coin by Name *********//
+
+func (ctr *Controller) CheckExpiredBId(c *gin.Context) {
+	name := c.Query("name")
+	res, err := ctr.Repo.CheckByName(name)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch expired coin by name", "details": err.Error()})
 		return
 	}
 	c.JSON(http.StatusFound, gin.H{"Details": res})

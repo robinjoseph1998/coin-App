@@ -14,4 +14,5 @@ type Repository interface {
 	DeleteCoin(coinID uint) error
 	LogExpiredCoins(name string, expired_date time.Time) error
 	ViewExpiredCoins() ([]models.ExpiredCoinLogs, error)
+	CheckByName(name string) (models.ExpiredCoinLogs, error)
 }

@@ -15,4 +15,6 @@ func SetupRoutes(router *gin.Engine, ctrl *controllers.Controller) {
 	router.GET("/view/all", ctrl.ListAll)
 	router.GET("/viewbyname/or/id", ctrl.GetByNameOrId)
 	router.GET("/view/expiredcoins/log", ctrl.ViewExpiredLogs)
+
+	router.GET("/expired/by/id", ctrl.CheckExpiredBId)
 }

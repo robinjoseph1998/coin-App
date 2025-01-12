@@ -79,3 +79,11 @@ func (r *repo) ViewExpiredCoins() ([]models.ExpiredCoinLogs, error) {
 	}
 	return expiredCoinLogs, nil
 }
+
+func (r *repo) CheckByName(name string) (models.ExpiredCoinLogs, error) {
+	var coin models.ExpiredCoinLogs
+	if err := r.db.Where("name = ?", name).First(&coin).Error; err != nil {
+		return models.ExpiredCoinLogs{}, err
+	}
+	return coin, nil
+}
